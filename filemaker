@@ -1,0 +1,44 @@
+#!/usr/bin/python
+
+#Sudie Roweton
+#Lab 6 - Filemaker
+#CS 3030 - Scripting Languages
+
+import sys
+import random
+import shlex
+
+#make sure correct number of parameters
+if len(sys.argv) != 4:
+	print("Usage: ./filemaker INPUTCOMMANDFILE OUTPUTFILE RECORDCOUNT")
+	exit(1)
+
+#store parameters in usable variables
+inputfile = sys.argv[1]
+outputfile = sys.argv[2]
+recordcount = sys.argv[3]
+
+#make sure files will open
+try:
+    inputFile =	open(inputfile, 'r')
+except:
+	print("Error with opening input file")
+	exit(1)
+
+#try:
+#	open(outputfile, 'rw')
+	
+#except:
+#	print("Error with opening output file")
+#	exit(1)
+
+#read commands into a commands list
+
+cmdList = inputFile.readlines()
+for i in range(1,len(cmdList)):
+	#print cmdList[i]
+	cmd = shlex.split(cmdList[i])
+	#print cmd[0]
+	#print cmd[1]
+	
+  
