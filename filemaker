@@ -18,6 +18,13 @@ inputfile = sys.argv[1]
 outputfile = sys.argv[2]
 recordcount = sys.argv[3]
 
+try:
+	recordcount = int(recordcount)
+except:
+	print("Error")
+	exit(1)
+
+
 #make sure files will open
 try:
     inputFile =	open(inputfile, 'r')
@@ -25,20 +32,28 @@ except:
 	print("Error with opening input file")
 	exit(1)
 
-#try:
-#	open(outputfile, 'rw')
+try:
+	outputFile = open(outputfile, 'w')
 	
-#except:
-#	print("Error with opening output file")
-#	exit(1)
+except:
+	print("Error with opening output file")
+	exit(1)
+
 
 #read commands into a commands list
 
 cmdList = inputFile.readlines()
-for i in range(1,len(cmdList)):
-	#print cmdList[i]
-	cmd = shlex.split(cmdList[i])
-	#print cmd[0]
-	#print cmd[1]
+
+for i in range(recordcount):
+	for c in range(len(cmdList)):
+		cmd = shlex.split(cmdList[c])
+		if cmd[0] == "STRING":
+			outputFile.write(cmd[1].decode('string_escape'))
+		
+
+
+exit(0)
+#for i in range(0,len(commandList)):
+#	print commandList[i]
 	
   
