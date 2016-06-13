@@ -74,8 +74,12 @@ for i in range(recordcount):
 				print "Error - key exists"
 				exit(1)
 			else:
-				randomData[cmd[1]] = randomFiles[cmd[2]][random.randint(0, len(randomFiles[cmd[2]])-1)]
-				outputFile.write(randomData[cmd[1]].decode('string_escape'))
+				randWord = randomFiles[cmd[2]][random.randint(0, len(randomFiles[cmd[2]])-1)]
+				randWord = randWord.rstrip()
+				randomData[cmd[1]] = randWord
+				#randomData[cmd[1]] = randomFiles[cmd[2]][random.randint(0, len(randomFiles[cmd[2]])-1)]
+				#outputFile.write(randWord)
+				outputFile.write(randomData[cmd[1]])
 		if cmd[0] == "NUMBER":
 			label = cmd[1]
 			minNum = int(cmd[2])
@@ -91,7 +95,7 @@ for i in range(recordcount):
 				outputFile.write(randomData[cmd[1]])
 		if cmd[0] == "REFER":
 			label = cmd[1]
-			outputFile.write(randomData[label].decode('string_escape'))
+			outputFile.write(randomData[label])
 exit(0)
 #for i in range(0,len(commandList)):
 #	print commandList[i]
