@@ -43,15 +43,40 @@ except:
 #read commands into a commands list
 
 cmdList = inputFile.readlines()
+header = shlex.split(cmdList[0])
+randomFiles = {}
 
+if header[0] == "HEADER":
+	outputFile.write(header[1].decode('string_escape'))
+
+#slurping files into randomFiles
+for i in range(len(cmdList)):
+	cmd = shlex.split(cmdList[i])
+	if cmd[0] == "FILEWORD":
+		inFile = open(cmd[2], 'r')
+		randomFiles[cmd[2]] = inFile.readlines()
+		inFile.close()
+
+#print randomFiles
+
+
+randomData = {}
 for i in range(recordcount):
+	randomData = {}
 	for c in range(len(cmdList)):
 		cmd = shlex.split(cmdList[c])
 		if cmd[0] == "STRING":
 			outputFile.write(cmd[1].decode('string_escape'))
-		
-
-
+		if cmd[0] == "FILEWORD":
+			randomData[cmd[1]] = randomFiles[cmd[2]][random.randint(0, len(randomFiles[cmd[2]])-1)]
+			outputFile.write(randomData[cmd[1]].decode('string_escape'))
+		if cmd[0] == "NUMBER":
+				minNum = int(cmd[2])
+				maxNum = int(cmd[3])
+				randomData[cmd[1]] = random.randint(minNum, maxNum)
+				outputFile.write(randomData[cmd[1]])
+		if cmd[0] == "REFER":
+			outputFile.write(randomData[cmd[1]].decode('string_escape'))
 exit(0)
 #for i in range(0,len(commandList)):
 #	print commandList[i]
